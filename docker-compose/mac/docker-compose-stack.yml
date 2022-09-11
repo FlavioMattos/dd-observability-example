@@ -44,10 +44,7 @@ services:
       com.datadoghq.ad.logs: '[{"source": "python", "service": "discounts-service"}]'
       my.custom.label.team: "discount"
   frontend:
-    image: "ddtraining/storefront-fixed-mac:2.1.4"
-    build:
-      context: .
-      dockerfile: ~/dd-observability-example/docker-compose/mac/Dockerfile
+    image: "storefront-fixed-mac:latest"
     hostname: "store-frontend"
     environment:
       - DD_AGENT_HOST=agent
