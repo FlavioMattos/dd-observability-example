@@ -20,7 +20,7 @@ services:
     labels:
       com.datadoghq.ad.logs: '[{"source": "agent", "service": "agent"}]'
   discounts:
-    image: "ddtraining/discounts:2.1.4"
+    image: "flaviofmattos/ddtraining-discounts-broken:2.1.4"
     hostname: "discounts-service"
     environment:
       - FLASK_DEBUG=1
@@ -36,8 +36,6 @@ services:
       - DD_VERSION=1.1
     ports:
       - "5001:5001"
-    volumes:
-      - "../../discounts-service:/app"
     depends_on:
       - agent
       - db
@@ -80,7 +78,7 @@ services:
       com.datadoghq.ad.logs: '[{"source": "ruby", "service": "store-frontend"}]'
       my.custom.label.team: "devops bootcamp"
   advertisements:
-    image: "ddtraining/advertisements:2.1.4"
+    image: "flaviofmattos/ddtraining-advertisements-broken:2.1.4"
     hostname: "ads-service"
     environment:
       - FLASK_DEBUG=1
@@ -96,8 +94,6 @@ services:
       - DD_VERSION=1.1
     ports:
       - "5002:5002"
-    volumes:
-      - "../../ads-service:/app"
     depends_on:
       - agent
       - db
@@ -113,3 +109,16 @@ services:
       - DD_ENV=development
     labels:
       com.datadoghq.ad.logs: '[{"source": "postgresql", "service": "postgres"}]'
+  traffic-replay:
+    image: "ddtraining/traffic-replay:latest"
+    hostname: "traffic-generator"
+    environment:
+      - FRONTEND_HOST=store-frontend
+      - FRONTEND_PORT=3000
+      - DD_ENV=development
+    depends_on:
+      - agent
+      - frontend
+      - db
+      - advertisements
+      - discounts
