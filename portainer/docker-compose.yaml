@@ -1,0 +1,25 @@
+version: '3'
+services:
+  portainer:
+    image: "portainer/portainer-ce:2.9.3"
+    hostname: "portainer"
+    ports:
+      - "9443:9443"
+      - "9000:9000"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: on-failure
+volumes:
+  portainer_data:
+    driver: local
+
+# sudo docker volume create portainer_data
+# sudo docker run -d \
+# -p 9000:9000 \
+# -p 9443:9443 \
+# --name portainer \
+# --restart=on-failure \
+# -v portainer_data:/data \
+# -v "/var/run/docker.sock:/var/run/docker.sock"  \
+# portainer/portainer-ce:2.9.3

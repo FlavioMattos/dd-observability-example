@@ -11,8 +11,9 @@ services:
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_DOCKER_LABELS_AS_TAGS={"my.custom.label.team":"devops bootcamp"}
       - DD_TAGS=${TAG_DEFAULTS}
+      - DD_SITE=${DD_SITE}
     ports:
-      - "8126:8126"
+      - "8126:8126/tcp"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
