@@ -1,8 +1,9 @@
 version: '3'
 services:
   agent:
-    image: "datadog/agent:${AGENT_VERSION}"
-    hostname: "datadog-agent"
+    image: datadog/agent:${AGENT_VERSION}
+    # image: "datadog/agent:latest"
+    hostname: datadog-agent
     environment:
       - DD_API_KEY=${DD_API_KEY}
       - DD_APM_ENABLED=true
@@ -12,8 +13,9 @@ services:
       - DD_ENV=development
       - DD_DOCKER_LABELS_AS_TAGS={"my.custom.label.team":"devops bootcamp"}
       - DD_TAGS=${TAG_DEFAULTS}
+      - DD_SITE=${DD_SITE}
     ports:
-      - "8126:8126"
+      - 8126:8126/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
